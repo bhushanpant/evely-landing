@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evely — Coming Soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal-deep:  #1A3533;
+      --teal-dark:  #0D3D3B;
+      --accent:     #0ABAB5;
+      --teal-muted: #5A8A87;
+      --border:     #C8E0DE;
+      --bg-card:    #EFF8F7;
+      --bg:         #FAF7F2;
+      --error:      #ef4444;
+      --shadow-sm:  0 1px 4px rgba(13,61,59,0.06);
+      --shadow-md:  0 4px 20px rgba(13,61,59,0.09);
+      --radius-lg:  22px;
+      --max-w-wide: 980px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Onest', sans-serif;
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--teal-deep);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-gradient {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(
+        120% 90% at 60% 40%,
+        rgb(178,224,220) 0%,
+        rgb(223,242,240) 30%,
+        rgb(240,249,248) 55%,
+        rgb(250,247,242) 100%
+      );
+    }
+
+    nav, main, footer { position: relative; z-index: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 28px 40px;
+    }
+    .nav-inner {
+      max-width: var(--max-w-wide); margin: 0 auto;
+      display: flex; align-items: center;
+    }
+    .nav-logo img { height: 36px; display: block; }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      max-width: var(--max-w-wide);
+      margin: 0 auto;
+      padding: 0 32px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      text-align: center;
+      padding: 160px 0 80px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: 'Onest', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 28px; display: block;
+    }
+
+    .content h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 5.5vw, 58px);
+      font-weight: 500;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      color: var(--teal-dark);
+      margin-bottom: 20px;
+    }
+
+    .content h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .content-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--teal-muted);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── FORM ── */
+    .waitlist-form {
+      display: flex;
+      gap: 10px;
+      max-width: 420px;
+      margin: 0 auto 16px;
+    }
+
+    .waitlist-form input {
+      flex: 1;
+      padding: 15px 22px;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      font-family: 'Onest', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      background: rgba(255,255,255,0.85);
+      color: var(--teal-deep);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .waitlist-form input:focus { border-color: var(--accent); }
+    .waitlist-form input::placeholder { color: var(--teal-muted); }
+    .waitlist-form input.error { border-color: var(--error); }
+
+    .submit-btn {
+      font-family: 'Onest', sans-serif;
+      font-size: 15px; font-weight: 500;
+      background: var(--accent);
+      color: var(--teal-dark);
+      padding: 15px 28px;
+      border-radius: 9999px;
+      border: none; cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .submit-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ── SUCCESS ── */
+    .success-msg {
+      display: none;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 20px 28px;
+      background: rgba(10,186,181,0.08);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+    .success-msg.visible { display: block; }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 500;
+      color: var(--teal-dark);
+      margin-bottom: 6px;
+    }
+    .success-sub {
+      font-size: 14px; font-weight: 300;
+      color: var(--teal-muted);
+      line-height: 1.6;
+    }
+
+    /* ── BACK LINK ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--teal-muted);
+      text-decoration: none;
+      margin-top: 40px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 36px 32px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 500;
+      color: var(--teal-dark); margin-bottom: 6px; letter-spacing: -0.02em;
+    }
+    footer .tagline {
+      font-size: 12px; font-weight: 300;
+      color: var(--teal-muted);
+    }
+
+    @media (max-width: 560px) {
+      main { padding: 0 20px; }
+      nav { padding: 20px 24px; }
+      .waitlist-form { flex-direction: column; }
+      .submit-btn { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-gradient" aria-hidden="true"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="evely-logo.png" alt="Evely">
+    </a>
+  </div>
+</nav>
+
+<main>
+  <div class="content">
+    <span class="eyebrow">Coming soon</span>
+    <p class="content-sub">Join the waitlist and we'll let you know when access becomes available.</p>
+
+    <div id="form-wrap">
+      <div class="waitlist-form">
+        <input type="email" id="email-input" placeholder="Your email address">
+        <button class="submit-btn" onclick="handleSubmit()">Notify me</button>
+      </div>
+    </div>
+
+    <div class="success-msg" id="success-msg">
+      <div class="success-title">You're in.</div>
+      <div class="success-sub">Keep an eye on your inbox for the updates.</div>
+    </div>
+
+    <a href="index.html" class="back-link">← Back to Evely</a>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo">Evely</div>
+  <p class="tagline">Your body. Your data. Your priorities.</p>
+</footer>
+
+<script>
+  function handleSubmit() {
+    const input = document.getElementById('email-input');
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      input.classList.add('error');
+      input.focus();
+      return;
+    }
+    input.classList.remove('error');
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('success-msg').classList.add('visible');
+  }
+
+  document.getElementById('email-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') handleSubmit();
+    this.classList.remove('error');
+  });
+</script>
+
+</body>
+</html>

@@ -267,17 +267,52 @@
 
     /* ── FOOTER ── */
     footer {
-      padding: 36px 32px;
-      text-align: center;
+      background: var(--bg-card);
+      padding: 56px 32px;
+    }
+    .footer-inner {
+      max-width: var(--max-w-wide);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
     }
     .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px; font-weight: 500;
-      color: var(--teal-dark); margin-bottom: 6px; letter-spacing: -0.02em;
+      height: 40px;
+      display: block;
     }
     footer .tagline {
-      font-size: 12px; font-weight: 300;
-      color: var(--teal-muted);
+      font-size: 13px; font-weight: 300;
+      color: var(--teal-deep);
+      opacity: 0.35;
+    }
+    .footer-divider {
+      height: 1px;
+      background: var(--border);
+    }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--teal-deep);
+      opacity: 0.35;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .footer-links a:hover { opacity: 0.65; }
+    .footer-copy {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--teal-deep);
+      opacity: 0.35;
     }
 
     /* ── RESPONSIVE ── */
@@ -448,8 +483,17 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Evely</div>
-  <p class="tagline">Your body. Your data. Your priorities.</p>
+  <div class="footer-inner">
+    <a href="/"><img src="evely-logo.png" alt="Evely" class="footer-logo"></a>
+    <p class="tagline">Your body. Your data. Your priorities.</p>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+      </div>
+      <span class="footer-copy">&copy; 2026 Evely Health</span>
+    </div>
+  </div>
 </footer>
 
 <script></script>

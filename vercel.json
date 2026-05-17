@@ -1,14 +1,9 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
+      "src": "/(.*)",
       "has": [{ "type": "host", "value": "investors.evely.health" }],
-      "destination": "/investors/index.html"
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "investors.evely.health" }],
-      "destination": "/investors/:path*"
+      "dest": "/investors/$1"
     }
   ]
 }

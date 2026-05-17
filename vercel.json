@@ -1,11 +1,14 @@
 {
-  "rewrites": {
-    "beforeFiles": [
-      {
-        "source": "/(.*)",
-        "has": [{ "type": "host", "value": "investors.evely.health" }],
-        "destination": "/investors/$1"
-      }
-    ]
-  }
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "investors.evely.health" }],
+      "destination": "/investors/index.html"
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "investors.evely.health" }],
+      "destination": "/investors/:path*"
+    }
+  ]
 }

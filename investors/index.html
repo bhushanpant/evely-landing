@@ -1,0 +1,1517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Evely · Investor Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-900: #073E3A;
+    --teal-800: #0B5953;
+    --teal-700: #0E8C82;
+    --teal-500: #2BAEA3;
+    --teal-200: #BCE3DE;
+    --teal-50:  #E8F2F0;
+
+    --ink:      #0F2B2A;
+    --ink-2:    #2D4A48;
+    --muted:    #6B7F7C;
+
+    --bg:       #F8F5F0;
+    --bg-2:     #F1ECE3;
+    --paper:    #FFFFFF;
+    --blush:    #F4DDD0;
+    --line:     #E2DAC9;
+    --line-2:   #CFC4AE;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  .serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; letter-spacing: -0.01em; }
+  .mono  { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  /* ---------- Privacy Banner ---------- */
+  .privacy-banner {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--teal-900);
+    color: #E8F2F0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 13px;
+    letter-spacing: 0.01em;
+  }
+  .privacy-banner-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 11px 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .privacy-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--teal-500);
+    box-shadow: 0 0 0 0 rgba(43,174,163,0.6);
+    animation: pulse 2.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(43,174,163,0.6); }
+    50%     { box-shadow: 0 0 0 6px rgba(43,174,163,0); }
+  }
+  .privacy-banner b { color: #fff; font-weight: 600; }
+  .privacy-banner .sep { opacity: 0.4; margin: 0 4px; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 26px 32px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo img { height: 30px; width: auto; }
+  .nav-investor-tag {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-left: 1px solid var(--line-2);
+    padding-left: 12px;
+    margin-left: 4px;
+  }
+  .nav-right {
+    display: flex; align-items: center; gap: 28px;
+    font-size: 14px; color: var(--ink-2);
+  }
+  .nav-right a { color: inherit; text-decoration: none; }
+  .nav-right a:hover { color: var(--teal-700); }
+  .nav-cta {
+    background: var(--ink);
+    color: #fff !important;
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .nav-cta:hover { background: var(--teal-800); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 64px 32px 48px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+    align-items: end;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--teal-700);
+    margin-bottom: 28px;
+  }
+  .eyebrow .bar { width: 18px; height: 1px; background: var(--teal-700); }
+  h1.hero-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(48px, 6.4vw, 88px);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    margin: 0;
+    padding-bottom: 0.08em;
+    color: var(--ink);
+  }
+  h1.hero-title em {
+    font-style: italic;
+    color: var(--teal-700);
+  }
+  .hero-sub {
+    margin-top: 36px;
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    max-width: 520px;
+  }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    align-self: end;
+  }
+  .hero-meta {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .hero-meta .meta-item {
+    padding: 18px 18px 18px 0;
+    border-right: 1px solid var(--line);
+  }
+  .hero-meta .meta-item:nth-child(3n) { border-right: 0; padding-right: 0; }
+  .hero-meta .meta-item:nth-child(n+4) { border-top: 1px solid var(--line); }
+  .hero-meta .meta-item:not(:nth-child(3n)) { padding-left: 0; }
+  .hero-meta .meta-item:nth-child(3n+2),
+  .hero-meta .meta-item:nth-child(3n+3) { padding-left: 18px; }
+  .meta-item .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .meta-item .value {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .meta-item .value small { font-family: 'Inter'; font-size: 12px; color: var(--muted); display: block; margin-top: 4px; font-weight: 400; line-height: 1.35; }
+
+  .hero-pullquote {
+    border-left: 2px solid var(--teal-700);
+    padding: 4px 0 4px 18px;
+  }
+  .hero-pullquote p {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 0 0 10px;
+  }
+  .hero-pullquote .pq-attr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- Tool Cards ---------- */
+  .tools {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 24px 32px 96px;
+  }
+  .tools-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+    margin-bottom: 32px;
+  }
+  .tools-header h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    margin: 0;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .tools-header .count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .tool-card {
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 36px 36px 32px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.4s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    min-height: 480px;
+  }
+  .tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px -24px rgba(15,43,42,0.18);
+    border-color: var(--teal-200);
+  }
+  .tool-card:hover .visual-stage { transform: scale(1.02); }
+  .tool-card:hover .card-arrow { transform: translate(4px,-4px); background: var(--teal-700); color: #fff; }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .card-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    background: var(--teal-50);
+    padding: 6px 10px;
+    border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .card-tag .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--teal-700);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  .card-arrow {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink);
+    transition: all 0.3s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .card-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 42px;
+    line-height: 1.0;
+    letter-spacing: -0.015em;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+  .card-title em { font-style: italic; color: var(--teal-700); }
+  .card-desc {
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0 0 24px;
+    max-width: 440px;
+  }
+
+  .visual-stage {
+    margin-top: auto;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* Blueprint visual */
+  .bp-stage {
+    background: linear-gradient(180deg, #FBF8F2 0%, #F1ECE3 100%);
+    padding: 22px;
+    border: 1px solid var(--line);
+    height: 200px;
+    position: relative;
+  }
+  .bp-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 14px;
+    height: 100%;
+  }
+  .bp-priorities { display: flex; flex-direction: column; gap: 8px; }
+  .bp-priority {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px;
+  }
+  .bp-priority .num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--teal-700);
+    line-height: 1;
+    width: 18px;
+  }
+  .bp-priority .pname { font-weight: 500; color: var(--ink); }
+  .bp-priority .pmeta { color: var(--muted); font-size: 11px; margin-top: 2px; }
+  .bp-priority.muted { opacity: 0.55; }
+
+  .bp-rings {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex; flex-direction: column; gap: 8px;
+    align-items: center; justify-content: center;
+  }
+  .bp-rings svg { width: 100%; max-width: 110px; height: auto; }
+  .bp-rings-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Supplement visual */
+  .sa-stage {
+    background: linear-gradient(180deg, #FBF8F2 0%, #F4DDD0 100%);
+    padding: 22px;
+    border: 1px solid var(--line);
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sa-pills {
+    display: flex; flex-direction: column; gap: 7px;
+    height: 100%; justify-content: center;
+  }
+  .sa-pill {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 9px 12px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px;
+  }
+  .sa-pill .icon {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .sa-pill .icon.keep { background: var(--teal-50); color: var(--teal-700); }
+  .sa-pill .icon.cut  { background: #F8E4E1; color: #B85045; }
+  .sa-pill .icon.add  { background: #F4DDD0; color: #A05A2C; }
+  .sa-pill .name { font-weight: 500; color: var(--ink); }
+  .sa-pill .verdict { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .sa-pill .verdict.keep { color: var(--teal-700); }
+  .sa-pill .verdict.cut  { color: #B85045; }
+  .sa-pill .verdict.add  { color: #A05A2C; }
+
+  /* Card meta line */
+  .card-meta {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .card-meta .privacy-mark { color: var(--teal-700); display: inline-flex; align-items: center; gap: 6px; }
+  .card-meta .privacy-mark svg { width: 11px; height: 11px; }
+
+  /* ---------- Privacy section ---------- */
+  .privacy-section {
+    background: var(--ink);
+    color: #E8F2F0;
+    margin-top: 24px;
+  }
+  .privacy-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 96px 32px;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+  }
+  .privacy-section h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 56px;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin: 0;
+    padding-bottom: 0.12em;
+    font-weight: 400;
+    color: #fff;
+  }
+  .privacy-section h2 em { font-style: italic; color: var(--teal-500); }
+  .privacy-section .lead {
+    margin-top: 24px;
+    color: rgba(255,255,255,0.7);
+    font-size: 17px;
+    line-height: 1.55;
+    max-width: 460px;
+  }
+  .privacy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 40px;
+  }
+  .privacy-item .num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--teal-500);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .privacy-item h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    margin: 0 0 8px;
+    color: #fff;
+    font-weight: 600;
+  }
+  .privacy-item p {
+    margin: 0;
+    color: rgba(255,255,255,0.65);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ---------- Section: shared ---------- */
+  .section {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 112px 32px;
+    border-top: 1px solid var(--line);
+  }
+  .section:first-of-type { border-top: 0; }
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 64px;
+    margin-bottom: 64px;
+    align-items: end;
+  }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-eyebrow .bar { width: 18px; height: 1px; background: var(--teal-700); }
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(40px, 4.2vw, 60px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0;
+    padding-bottom: 0.1em;
+    font-weight: 400;
+    color: var(--ink);
+  }
+  .section-title em { font-style: italic; color: var(--teal-700); }
+  .section-lead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 540px;
+  }
+
+  /* ---------- Pilot signal ---------- */
+  .signal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .signal-cell {
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 32px 28px 36px;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 200px;
+  }
+  .signal-cell .stat {
+    font-family: 'Instrument Serif', serif;
+    font-size: 64px;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--teal-700);
+    margin-top: auto;
+  }
+  .signal-cell .stat sup { font-size: 28px; vertical-align: top; }
+  .signal-cell .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .signal-cell .desc {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+  .signal-foot {
+    margin-top: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .signal-foot .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal-700); }
+
+  /* ---------- Science section ---------- */
+  .science-section {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .science-section .section { border-top: 0; }
+  .advisors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .advisor {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .advisor-portrait {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--teal-200), var(--blush));
+    flex-shrink: 0;
+  }
+  .advisor-portrait img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .advisor-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    line-height: 1.15;
+    margin: 0;
+    color: var(--ink);
+  }
+  .advisor-head {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    min-width: 0;
+  }
+  .advisor-head > div:last-child { min-width: 0; flex: 1; }
+  .advisor-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    margin-top: 2px;
+  }
+  .advisor-meta {
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.55;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    margin-top: 4px;
+  }
+  .advisor-meta .row { display: flex; justify-content: space-between; gap: 16px; padding: 4px 0; }
+  .advisor-meta .row .k { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .advisor-meta .row .v { color: var(--ink); text-align: right; font-size: 14px; }
+
+  .institutions {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .institutions .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .institutions .names {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--ink-2);
+  }
+  .institutions .names span { white-space: nowrap; }
+
+  /* ---------- Roadmap ---------- */
+  .roadmap-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+  .road-row {
+    display: grid;
+    grid-template-columns: 80px 1.2fr 1.6fr 140px;
+    gap: 32px;
+    align-items: center;
+    padding: 28px 4px;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.2s;
+  }
+  .road-row:hover { background: rgba(255,255,255,0.5); }
+  .road-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .road-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .road-name em { font-style: italic; color: var(--teal-700); }
+  .road-desc { color: var(--ink-2); font-size: 14px; line-height: 1.55; }
+  .road-status {
+    justify-self: end;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+  .road-status.live   { color: var(--teal-700); border-color: var(--teal-200); background: var(--teal-50); }
+  .road-status.beta   { color: #A05A2C; border-color: var(--blush); background: #FAEDDF; }
+  .road-status.q3     { color: var(--muted); }
+  .road-status.q4     { color: var(--muted); }
+
+  /* ---------- Closing CTA ---------- */
+  .cta-section {
+    background: var(--teal-900);
+    color: #E8F2F0;
+  }
+  .cta-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 120px 32px;
+    text-align: center;
+  }
+  .cta-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--teal-500);
+    margin-bottom: 28px;
+  }
+  .cta-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(48px, 6vw, 84px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 auto;
+    padding-bottom: 0.08em;
+    color: #fff;
+    max-width: 900px;
+    font-weight: 400;
+  }
+  .cta-title em { font-style: italic; color: var(--teal-500); }
+  .cta-sub {
+    margin: 24px auto 0;
+    color: rgba(255,255,255,0.7);
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 540px;
+  }
+  .cta-buttons {
+    display: flex; gap: 14px; justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .cta-btn {
+    padding: 16px 26px;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .cta-btn.primary { background: #fff; color: var(--ink); }
+  .cta-btn.primary:hover { background: var(--teal-50); transform: translateY(-2px); }
+  .cta-btn.ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.25); }
+  .cta-btn.ghost:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.4); }
+  .cta-deck {
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .cta-deck b { color: #fff; font-weight: 500; }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 48px 32px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+  }
+  .footer .left { display: flex; align-items: center; gap: 14px; }
+  .footer img { height: 22px; opacity: 0.7; }
+  .footer a { color: var(--ink-2); text-decoration: none; }
+  .footer a:hover { color: var(--teal-700); }
+  .footer .links { display: flex; gap: 24px; }
+
+  /* ---------- Modal ---------- */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(15,43,42,0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .modal-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .modal {
+    background: var(--paper);
+    border-radius: 20px;
+    max-width: 480px;
+    width: 100%;
+    padding: 40px;
+    transform: translateY(12px) scale(0.98);
+    transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+    box-shadow: 0 40px 80px -20px rgba(15,43,42,0.4);
+  }
+  .modal-backdrop.open .modal { transform: translateY(0) scale(1); }
+
+  .modal-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: var(--teal-50);
+    color: var(--teal-700);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+  }
+  .modal h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 32px;
+    margin: 0 0 12px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+  }
+  .modal h3 em { color: var(--teal-700); font-style: italic; }
+  .modal p {
+    margin: 0 0 12px;
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .modal-list {
+    margin: 24px 0;
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 0;
+  }
+  .modal-list li {
+    list-style: none;
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .modal-list svg {
+    flex-shrink: 0;
+    color: var(--teal-700);
+    margin-top: 2px;
+  }
+  .modal-actions {
+    display: flex; gap: 12px;
+    margin-top: 28px;
+  }
+  .btn {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--teal-800); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-2);
+    border-color: var(--line);
+  }
+  .btn-ghost:hover { background: var(--bg-2); }
+
+  /* ---------- Loader Overlay ---------- */
+  .loader-backdrop {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .loader-backdrop.open { opacity: 1; pointer-events: auto; }
+  .loader-orbit {
+    width: 80px; height: 80px;
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .loader-orbit::before, .loader-orbit::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid var(--teal-200);
+    border-top-color: var(--teal-700);
+    animation: spin 1.4s linear infinite;
+  }
+  .loader-orbit::after {
+    inset: 14px;
+    border-color: var(--teal-50);
+    border-top-color: var(--teal-500);
+    animation-duration: 0.9s;
+    animation-direction: reverse;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-tool {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    margin-bottom: 12px;
+  }
+  .loader-msg {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .loader-msg em { font-style: italic; color: var(--teal-700); }
+  .loader-status {
+    margin-top: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 40px 22px 32px; }
+    .hero-meta { grid-template-columns: repeat(2, 1fr); }
+    .hero-meta .meta-item:nth-child(3n) { border-right: 1px solid var(--line); padding-right: 18px; }
+    .hero-meta .meta-item:nth-child(2n) { border-right: 0; padding-right: 0; }
+    .hero-meta .meta-item:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .hero-meta .meta-item { padding: 16px 18px 16px 0 !important; }
+    .hero-meta .meta-item:nth-child(2n) { padding-left: 18px !important; padding-right: 0 !important; }
+    .nav { padding: 22px 22px 0; }
+    .tools { padding: 20px 22px 64px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .privacy-inner { grid-template-columns: 1fr; gap: 40px; padding: 64px 22px; }
+    .privacy-section h2 { font-size: 40px; }
+    .privacy-grid { grid-template-columns: 1fr; gap: 24px; }
+    .footer { flex-direction: column; gap: 16px; padding: 32px 22px 40px; }
+    .nav-investor-tag { display: none; }
+    .nav-right { gap: 16px; }
+    .nav-right a:not(.nav-cta) { display: none; }
+    .section { padding: 72px 22px; }
+    .section-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+    .signal-grid { grid-template-columns: repeat(2, 1fr); }
+    .signal-cell .stat { font-size: 48px; }
+    .advisors { grid-template-columns: 1fr; gap: 16px; }
+    .advisor { padding: 28px; }
+    .advisor-head { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .advisor-name { font-size: 22px; }
+    .road-row { grid-template-columns: 1fr; gap: 8px; padding: 22px 4px; }
+    .road-status { justify-self: start; }
+    .institutions { gap: 20px; }
+    .institutions .names { font-size: 18px; gap: 18px; }
+    .cta-inner { padding: 80px 22px; }
+    .cta-deck { gap: 18px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ Privacy Banner ============ -->
+<div class="privacy-banner">
+  <div class="privacy-banner-inner">
+    <span class="privacy-dot"></span>
+    <span><b>Investor preview environment</b> · No accounts, no logins, no stored sessions <span class="sep">·</span> Inputs are never persisted, never seen by the team</span>
+  </div>
+</div>
+
+<!-- ============ Nav ============ -->
+<nav class="nav">
+  <div class="nav-logo">
+    <img src="../evely-logo.png" alt="Evely" />
+    <span class="nav-investor-tag mono">Investor Demo</span>
+  </div>
+  <div class="nav-right">
+    <a href="#tools">Tools</a>
+    <a href="#privacy">Privacy</a>
+    <a href="mailto:investors@evely.health" class="nav-cta">Contact founders</a>
+  </div>
+</nav>
+
+<!-- ============ Hero ============ -->
+<header class="hero">
+  <div>
+    <div class="eyebrow">
+      <span class="bar"></span>
+      <span>Evely · The decision layer for women's health</span>
+    </div>
+    <h1 class="hero-title">A live look<br>at what we're<br>building <em>for women.</em></h1>
+    <p class="hero-sub">Two working tools, calibrated to female biology — Blueprint synthesizes symptoms into priorities, Supplement Advisor cuts the noise from your stack. Click in. Try it with your own context. Nothing is saved.</p>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="label">Cohort</div>
+        <div class="value">3<small>now in pilot</small></div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Tools live</div>
+        <div class="value">2<small>of 6 planned</small></div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Built for</div>
+        <div class="value">Female<small>biology &amp; life-stage</small></div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Round</div>
+        <div class="value">Seed<small>extension · open</small></div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Pilot n</div>
+        <div class="value">1.5k<small>women, 2 cohorts</small></div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Geo</div>
+        <div class="value">US · EU<small>cohort 3 live</small></div>
+      </div>
+    </div>
+    <div class="hero-pullquote">
+      <p>"Evely identified my symptom pattern — weirdly accurate — and gave me a clear focus area."</p>
+      <span class="pq-attr">Sarah, 41 · Pilot cohort</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ Tools ============ -->
+<main class="tools" id="tools">
+
+  <div class="tools-header">
+    <h2>The toolkit, hands-on.</h2>
+    <span class="count">02 / Live demos</span>
+  </div>
+
+  <div class="card-grid">
+
+    <!-- ===== Blueprint Card ===== -->
+    <article class="tool-card" data-tool="blueprint" data-url="https://blueprint.evely.health/pro">
+      <div class="card-top">
+        <span class="card-tag"><span class="live-dot"></span>Live demo</span>
+        <span class="card-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+        </span>
+      </div>
+
+      <h3 class="card-title">Blueprint<br><em>— your priorities.</em></h3>
+      <p class="card-desc">Three minutes of symptom + life-stage check-in. Out comes a ranked plan: top three drivers to focus on, and what to safely ignore for now.</p>
+
+      <div class="visual-stage">
+        <div class="bp-stage">
+          <div class="bp-grid">
+            <div class="bp-priorities">
+              <div class="bp-priority">
+                <div class="num">1</div>
+                <div>
+                  <div class="pname">Sleep architecture</div>
+                  <div class="pmeta">Cortisol curve · 3am wake-ups</div>
+                </div>
+              </div>
+              <div class="bp-priority">
+                <div class="num">2</div>
+                <div>
+                  <div class="pname">Estrogen rhythm</div>
+                  <div class="pmeta">Cycle irregularity · perimeno markers</div>
+                </div>
+              </div>
+              <div class="bp-priority muted">
+                <div class="num">3</div>
+                <div>
+                  <div class="pname">Glucose stability</div>
+                  <div class="pmeta">Watch · not urgent</div>
+                </div>
+              </div>
+            </div>
+            <div class="bp-rings">
+              <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="42" fill="none" stroke="#E2DAC9" stroke-width="3"/>
+                <circle cx="50" cy="50" r="42" fill="none" stroke="#0E8C82" stroke-width="3"
+                        stroke-dasharray="263" stroke-dashoffset="80" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+                <circle cx="50" cy="50" r="32" fill="none" stroke="#E2DAC9" stroke-width="3"/>
+                <circle cx="50" cy="50" r="32" fill="none" stroke="#2BAEA3" stroke-width="3"
+                        stroke-dasharray="201" stroke-dashoffset="120" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+                <circle cx="50" cy="50" r="22" fill="none" stroke="#E2DAC9" stroke-width="3"/>
+                <circle cx="50" cy="50" r="22" fill="none" stroke="#BCE3DE" stroke-width="3"
+                        stroke-dasharray="138" stroke-dashoffset="90" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+                <text x="50" y="54" text-anchor="middle" font-family="Instrument Serif" font-size="16" fill="#0F2B2A">68</text>
+              </svg>
+              <div class="bp-rings-label">Pattern signal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-meta">
+        <span>blueprint.evely.health/pro</span>
+        <span class="privacy-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          Nothing saved
+        </span>
+      </div>
+    </article>
+
+    <!-- ===== Supplement Advisor Card ===== -->
+    <article class="tool-card" data-tool="supplement" data-url="https://bloom-green-six.vercel.app/">
+      <div class="card-top">
+        <span class="card-tag"><span class="live-dot"></span>Live demo</span>
+        <span class="card-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+        </span>
+      </div>
+
+      <h3 class="card-title">Supplement<br>Advisor <em>— cut the stack.</em></h3>
+      <p class="card-desc">Drop in what you're already taking. We tell you what's likely working, what's redundant, and what's missing — calibrated to your symptoms and life stage.</p>
+
+      <div class="visual-stage">
+        <div class="sa-stage">
+          <div class="sa-pills">
+            <div class="sa-pill">
+              <div class="icon keep">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+              </div>
+              <div class="name">Magnesium glycinate</div>
+              <span class="verdict keep">Keep</span>
+            </div>
+            <div class="sa-pill">
+              <div class="icon cut">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>
+              </div>
+              <div class="name">Multivitamin (generic)</div>
+              <span class="verdict cut">Cut</span>
+            </div>
+            <div class="sa-pill">
+              <div class="icon add">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+              </div>
+              <div class="name">Vitamin D3 + K2</div>
+              <span class="verdict add">Add</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-meta">
+        <span>supplementintelligence.evely.health</span>
+        <span class="privacy-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          Nothing saved
+        </span>
+      </div>
+    </article>
+
+  </div>
+
+</main>
+
+<!-- ============ Privacy Section ============ -->
+<section class="privacy-section" id="privacy">
+  <div class="privacy-inner">
+    <div>
+      <h2>Play freely.<br><em>Nothing follows you out.</em></h2>
+      <p class="lead">These are the production tools — same models, same logic — running in a sandboxed investor environment. We don't want you holding back, so we built it so you can't be held to anything.</p>
+    </div>
+
+    <div class="privacy-grid">
+      <div class="privacy-item">
+        <span class="num">01</span>
+        <h4>No accounts. No emails.</h4>
+        <p>You don't sign in. The tools accept input directly without identifying you in any way.</p>
+      </div>
+      <div class="privacy-item">
+        <span class="num">02</span>
+        <h4>Sessions evaporate.</h4>
+        <p>Inputs and outputs are processed in-memory and discarded when you close the tab. Nothing is written to a database.</p>
+      </div>
+      <div class="privacy-item">
+        <span class="num">03</span>
+        <h4>The team never sees it.</h4>
+        <p>No logs of what you typed. No replay. Try your own symptoms, your spouse's, a stress-test edge case — none of it reaches us.</p>
+      </div>
+      <div class="privacy-item">
+        <span class="num">04</span>
+        <h4>Same tools, same models.</h4>
+        <p>This isn't a stripped demo. You're using exactly what cohort members use — minus the personalization that comes from a saved profile.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Pilot Signal ============ -->
+<section class="section" id="signal">
+  <div class="section-head">
+    <div>
+      <div class="section-eyebrow"><span class="bar"></span>Pilot signal · Cohorts 1–2</div>
+      <h2 class="section-title">What the<br>data already <em>shows.</em></h2>
+    </div>
+    <p class="section-lead">Across 1,500+ women in our first cohorts, Evely's prioritization layer reliably moved people off generic checklists and onto a focused first move. These are aggregate, anonymized pilot numbers — not projections.</p>
+  </div>
+
+  <div class="signal-grid">
+    <div class="signal-cell">
+      <div class="label">Felt clearer in 4 weeks</div>
+      <div class="desc">Self-reported "I know where to start" score</div>
+      <div class="stat">82<sup>%</sup></div>
+    </div>
+    <div class="signal-cell">
+      <div class="label">Reduced supplement spend</div>
+      <div class="desc">Median monthly spend after Supplement Advisor review</div>
+      <div class="stat">−47<sup>%</sup></div>
+    </div>
+    <div class="signal-cell">
+      <div class="label">Pattern match accuracy</div>
+      <div class="desc">Symptom cluster vs. clinician chart review</div>
+      <div class="stat">91<sup>%</sup></div>
+    </div>
+    <div class="signal-cell">
+      <div class="label">Weekly active in cohort</div>
+      <div class="desc">Returned for the weekly check-in loop</div>
+      <div class="stat">73<sup>%</sup></div>
+    </div>
+  </div>
+
+  <div class="signal-foot">
+    <span class="dot"></span>
+    <span>n = 1,500+ · Cohorts 1–2 · Pilot data, Jan–Mar 2026 · Available on request under NDA</span>
+  </div>
+</section>
+
+<!-- ============ Science / Advisors ============ -->
+<div class="science-section">
+  <section class="section" id="science">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow"><span class="bar"></span>The science layer</div>
+        <h2 class="section-title">Built with<br>scientific <em>rigour.</em></h2>
+      </div>
+      <p class="section-lead">Every priority Evely surfaces is grounded in peer-reviewed research on female endocrinology, sleep, and metabolic health — translated into a model that respects life stage, cycle phase, and individual context.</p>
+    </div>
+
+    <div class="advisors">
+      <div class="advisor">
+        <div class="advisor-head">
+          <div class="advisor-portrait"><img src="assets/nilah.jpg" alt="Prof. Nilah Ioannidis" /></div>
+          <div>
+            <h3 class="advisor-name">Prof. Nilah Ioannidis</h3>
+            <div class="advisor-role">Chief Scientific Advisor</div>
+          </div>
+        </div>
+        <div class="advisor-meta">
+          <div class="row"><span class="k">Currently</span><span class="v">UC Berkeley</span></div>
+          <div class="row"><span class="k">Previously</span><span class="v">Stanford · Harvard · Cambridge</span></div>
+          <div class="row"><span class="k">Focus</span><span class="v">Precision health · Genomics · Longevity</span></div>
+          <div class="row"><span class="k">Publications</span><span class="v">46 peer-reviewed</span></div>
+        </div>
+      </div>
+      <div class="advisor">
+        <div class="advisor-head">
+          <div class="advisor-portrait"><img src="assets/alex.jpg" alt="Prof. Alexander Ioannidis" /></div>
+          <div>
+            <h3 class="advisor-name">Prof. Alexander Ioannidis</h3>
+            <div class="advisor-role">Scientific Advisor</div>
+          </div>
+        </div>
+        <div class="advisor-meta">
+          <div class="row"><span class="k">Currently</span><span class="v">Stanford University</span></div>
+          <div class="row"><span class="k">Previously</span><span class="v">Harvard · Cambridge</span></div>
+          <div class="row"><span class="k">Focus</span><span class="v">Precision genetics · Clinical AI</span></div>
+          <div class="row"><span class="k">Publications</span><span class="v">81 peer-reviewed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="institutions">
+      <div class="label">Research lineage</div>
+      <div class="names">
+        <span>Stanford</span>
+        <span>Harvard</span>
+        <span>UC Berkeley</span>
+        <span>Cambridge</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ Roadmap ============ -->
+<section class="section" id="roadmap">
+  <div class="section-head">
+    <div>
+      <div class="section-eyebrow"><span class="bar"></span>What's next</div>
+      <h2 class="section-title">The toolkit,<br><em>twelve months out.</em></h2>
+    </div>
+    <p class="section-lead">Two tools live today. Four more are on the path — each one stays inside the same decision-layer thesis: less noise, more direction, calibrated to female biology at every life stage.</p>
+  </div>
+
+  <div class="roadmap-list">
+    <div class="road-row">
+      <div class="road-num">01</div>
+      <div class="road-name">Blueprint</div>
+      <div class="road-desc">Symptom + life-stage check-in → ranked priorities and what to ignore for now.</div>
+      <div class="road-status live">Live</div>
+    </div>
+    <div class="road-row">
+      <div class="road-num">02</div>
+      <div class="road-name">Supplement <em>Advisor</em></div>
+      <div class="road-desc">Audit the stack — keep, cut, add — based on symptoms, labs, and interactions.</div>
+      <div class="road-status live">Live</div>
+    </div>
+    <div class="road-row">
+      <div class="road-num">03</div>
+      <div class="road-name">Cycle <em>Lens</em></div>
+      <div class="road-desc">Reads cycle-phase signals from wearables to recalibrate priorities week-to-week.</div>
+      <div class="road-status beta">In beta · Q2</div>
+    </div>
+    <div class="road-row">
+      <div class="road-num">04</div>
+      <div class="road-name">Lab <em>Translator</em></div>
+      <div class="road-desc">Plain-language reading of bloodwork through a female-biology lens. Catches what "normal" misses.</div>
+      <div class="road-status q3">Q3 2026</div>
+    </div>
+    <div class="road-row">
+      <div class="road-num">05</div>
+      <div class="road-name">Perimeno <em>Compass</em></div>
+      <div class="road-desc">A dedicated module for the 35–55 transition — protocols, escalation flags, clinician handoff.</div>
+      <div class="road-status q3">Q3 2026</div>
+    </div>
+    <div class="road-row">
+      <div class="road-num">06</div>
+      <div class="road-name">Clinician <em>Bridge</em></div>
+      <div class="road-desc">A printable summary your doctor will actually read — pattern, priorities, and asks.</div>
+      <div class="road-status q4">Q4 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Closing CTA ============ -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Round open · Seed extension</div>
+    <h2 class="cta-title">We're building the<br>decision layer for the<br>half of <em>medicine that's been ignored.</em></h2>
+    <p class="cta-sub">If what you saw resonates, we'd love to talk. Founders are taking 30-minute conversations with aligned investors through May.</p>
+    <div class="cta-buttons">
+      <a class="cta-btn primary" href="mailto:investors@evely.health">
+        Book a call with founders
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+      </a>
+      <a class="cta-btn ghost" href="mailto:investors@evely.health?subject=Evely%20deck%20request">Request the deck</a>
+    </div>
+    <div class="cta-deck">
+      <span><b>Stage:</b> Seed extension</span>
+      <span><b>Geo:</b> US + EU</span>
+      <span><b>Lead:</b> Considering</span>
+      <span><b>Close:</b> Q3 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer class="footer">
+  <div class="left">
+    <img src="../evely-logo.png" alt="Evely" />
+    <span>&copy; 2026 Evely Health · Built for female biology</span>
+  </div>
+  <div class="links">
+    <a href="https://waitlist.evely.health/">Public site</a>
+    <a href="mailto:investors@evely.health">investors@evely.health</a>
+  </div>
+</footer>
+
+<!-- ============ Reminder Modal ============ -->
+<div class="modal-backdrop" id="reminder-modal">
+  <div class="modal" role="dialog" aria-labelledby="modal-title">
+    <div class="modal-icon">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="4" y="11" width="16" height="10" rx="2"/>
+        <path d="M8 11V7a4 4 0 018 0v4"/>
+      </svg>
+    </div>
+    <h3 id="modal-title">A quick note before you <em>play.</em></h3>
+    <p>You're about to open <b id="modal-tool-name">the tool</b> in a sandboxed investor environment.</p>
+    <ul class="modal-list">
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+        <span>Try your own symptoms or someone else's — there's no email, no signup, no profile created.</span>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+        <span>Inputs and outputs are not stored or sent to the team. The session vanishes when you close the tab.</span>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+        <span>You can be honest, weird, or test edge cases — we'll never know.</span>
+      </li>
+    </ul>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+      <button class="btn btn-primary" id="modal-go">Open demo →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Loader ============ -->
+<div class="loader-backdrop" id="loader">
+  <div class="loader-orbit"></div>
+  <div class="loader-tool" id="loader-tool">Blueprint</div>
+  <div class="loader-msg">Spinning up your <em>private session…</em></div>
+  <div class="loader-status" id="loader-status">Booting sandbox · No session ID assigned</div>
+</div>
+
+<script>
+  const cards = document.querySelectorAll('.tool-card[data-url]');
+  const modal = document.getElementById('reminder-modal');
+  const modalToolName = document.getElementById('modal-tool-name');
+  const modalGo = document.getElementById('modal-go');
+  const modalCancel = document.getElementById('modal-cancel');
+  const loader = document.getElementById('loader');
+  const loaderTool = document.getElementById('loader-tool');
+  const loaderStatus = document.getElementById('loader-status');
+
+  let pendingUrl = null;
+  let pendingToolName = null;
+
+  const TOOL_META = {
+    blueprint: { label: 'Blueprint', steps: [
+      'Booting sandbox · No session ID assigned',
+      'Loading female-biology calibration layer…',
+      'Ready · Opening blueprint.evely.health/pro'
+    ]},
+    supplement: { label: 'Supplement Advisor', steps: [
+      'Booting sandbox · No session ID assigned',
+      'Loading supplement interaction graph…',
+      'Ready · Opening Supplement Advisor'
+    ]}
+  };
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const tool = card.dataset.tool;
+      const url = card.dataset.url;
+      const meta = TOOL_META[tool];
+      pendingUrl = url;
+      pendingToolName = meta.label;
+      modalToolName.textContent = meta.label;
+      modal.classList.add('open');
+    });
+  });
+
+  modalCancel.addEventListener('click', () => {
+    modal.classList.remove('open');
+    pendingUrl = null;
+  });
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('open');
+      pendingUrl = null;
+    }
+  });
+
+  modalGo.addEventListener('click', () => {
+    if (!pendingUrl) return;
+    modal.classList.remove('open');
+    const tool = pendingToolName === 'Blueprint' ? 'blueprint' : 'supplement';
+    loaderTool.textContent = pendingToolName;
+    const steps = TOOL_META[tool].steps;
+    loaderStatus.textContent = steps[0];
+    loader.classList.add('open');
+    setTimeout(() => loaderStatus.textContent = steps[1], 700);
+    setTimeout(() => loaderStatus.textContent = steps[2], 1400);
+    setTimeout(() => {
+      window.open(pendingUrl, '_blank', 'noopener');
+      loader.classList.remove('open');
+      pendingUrl = null;
+    }, 1900);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) {
+      modal.classList.remove('open');
+      pendingUrl = null;
+    }
+  });
+</script>
+
+</body>
+</html>

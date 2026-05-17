@@ -1,9 +1,11 @@
 {
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": "investors.evely.health" }],
-      "destination": "/investors/$1"
-    }
-  ]
+  "rewrites": {
+    "beforeFiles": [
+      {
+        "source": "/(.*)",
+        "has": [{ "type": "host", "value": "investors.evely.health" }],
+        "destination": "/investors/$1"
+      }
+    ]
+  }
 }

@@ -822,6 +822,7 @@
   .modal-backdrop.open { opacity: 1; pointer-events: auto; }
 
   .modal {
+    position: relative;
     background: var(--paper);
     border-radius: 20px;
     max-width: 480px;
@@ -832,6 +833,25 @@
     box-shadow: 0 40px 80px -20px rgba(15,43,42,0.4);
   }
   .modal-backdrop.open .modal { transform: translateY(0) scale(1); }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s;
+  }
+  .modal-close:hover { background: var(--bg-2); color: var(--ink); }
 
   .modal-icon {
     width: 56px; height: 56px;
@@ -898,6 +918,11 @@
     border-color: var(--line);
   }
   .btn-ghost:hover { background: var(--bg-2); }
+  .btn-teal {
+    background: var(--teal-700);
+    color: #fff;
+  }
+  .btn-teal:hover { background: var(--teal-800); }
 
   /* ---------- Loader Overlay ---------- */
   .loader-backdrop {
@@ -1021,7 +1046,7 @@
       <span>Evely · The decision layer for women's health</span>
     </div>
     <h1 class="hero-title">A live look<br>at what we're<br>building <em>for women.</em></h1>
-    <p class="hero-sub">Two working tools, calibrated to female biology — Blueprint synthesizes symptoms into priorities, Supplement Advisor cuts the noise from your stack. Click in. Try it with your own context. Nothing is saved.</p>
+    <p class="hero-sub">Two working tools, calibrated to female biology — Blueprint synthesizes symptoms into priorities, Supplement Intelligence cuts the noise from your stack. Click in. Try it with your own context. Nothing is saved.</p>
   </div>
 
   <div class="hero-right">
@@ -1069,7 +1094,7 @@
   <div class="card-grid">
 
     <!-- ===== Blueprint Card ===== -->
-    <article class="tool-card" data-tool="blueprint" data-url="https://blueprint.evely.health/pro/?invited=True&temp=True">
+    <article class="tool-card" data-tool="blueprint" data-url="https://blueprint.evely.health/pro/?invited=True&temp=True" data-consumer-url="https://blueprint.evely.health/?invited=True&temp=True">
       <div class="card-top">
         <span class="card-tag"><span class="live-dot"></span>Live demo</span>
         <span class="card-arrow" aria-hidden="true">
@@ -1134,8 +1159,8 @@
       </div>
     </article>
 
-    <!-- ===== Supplement Advisor Card ===== -->
-    <article class="tool-card" data-tool="supplement" data-url="https://supplementintelligence.evely.health/?invited=True&temp=True">
+    <!-- ===== Supplement Intelligence Card ===== -->
+    <article class="tool-card" data-tool="supplement" data-url="https://supplementintelligence.evely.health/?invited=True&temp=True" data-consumer-url="https://supplementintelligence.evely.health/?invited=True&temp=True">
       <div class="card-top">
         <span class="card-tag"><span class="live-dot"></span>Live demo</span>
         <span class="card-arrow" aria-hidden="true">
@@ -1143,7 +1168,7 @@
         </span>
       </div>
 
-      <h3 class="card-title">Supplement<br>Advisor <em>— cut the stack.</em></h3>
+      <h3 class="card-title">Supplement<br>Intelligence <em>— cut the stack.</em></h3>
       <p class="card-desc">Drop in what you're already taking. We tell you what's likely working, what's redundant, and what's missing — calibrated to your symptoms and life stage.</p>
 
       <div class="visual-stage">
@@ -1238,7 +1263,7 @@
     </div>
     <div class="signal-cell">
       <div class="label">Reduced supplement spend</div>
-      <div class="desc">Median monthly spend after Supplement Advisor review</div>
+      <div class="desc">Median monthly spend after Supplement Intelligence review</div>
       <div class="stat">−47<sup>%</sup></div>
     </div>
     <div class="signal-cell">
@@ -1334,7 +1359,7 @@
     </div>
     <div class="road-row">
       <div class="road-num">02</div>
-      <div class="road-name">Supplement <em>Advisor</em></div>
+      <div class="road-name">Supplement <em>Intelligence</em></div>
       <div class="road-desc">Audit the stack — keep, cut, add — based on symptoms, labs, and interactions.</div>
       <div class="road-status live">Live</div>
     </div>
@@ -1402,6 +1427,9 @@
 <!-- ============ Reminder Modal ============ -->
 <div class="modal-backdrop" id="reminder-modal">
   <div class="modal" role="dialog" aria-labelledby="modal-title">
+    <button class="modal-close" id="modal-close" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
     <div class="modal-icon">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <rect x="4" y="11" width="16" height="10" rx="2"/>
@@ -1425,7 +1453,7 @@
       </li>
     </ul>
     <div class="modal-actions">
-      <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+      <button class="btn btn-teal" id="modal-consumer">Consumer Product</button>
       <button class="btn btn-primary" id="modal-go">Open demo →</button>
     </div>
   </div>
@@ -1444,12 +1472,14 @@
   const modal = document.getElementById('reminder-modal');
   const modalToolName = document.getElementById('modal-tool-name');
   const modalGo = document.getElementById('modal-go');
-  const modalCancel = document.getElementById('modal-cancel');
+  const modalClose = document.getElementById('modal-close');
+  const modalConsumer = document.getElementById('modal-consumer');
   const loader = document.getElementById('loader');
   const loaderTool = document.getElementById('loader-tool');
   const loaderStatus = document.getElementById('loader-status');
 
   let pendingUrl = null;
+  let pendingConsumerUrl = null;
   let pendingToolName = null;
 
   const TOOL_META = {
@@ -1458,10 +1488,10 @@
       'Loading female-biology calibration layer…',
       'Ready · Opening blueprint.evely.health/pro'
     ]},
-    supplement: { label: 'Supplement Advisor', steps: [
+    supplement: { label: 'Supplement Intelligence', steps: [
       'Booting sandbox · No session ID assigned',
       'Loading supplement interaction graph…',
-      'Ready · Opening Supplement Advisor'
+      'Ready · Opening Supplement Intelligence'
     ]}
   };
 
@@ -1469,27 +1499,29 @@
     card.addEventListener('click', () => {
       const tool = card.dataset.tool;
       const url = card.dataset.url;
+      const consumerUrl = card.dataset.consumerUrl;
       const meta = TOOL_META[tool];
       pendingUrl = url;
+      pendingConsumerUrl = consumerUrl;
       pendingToolName = meta.label;
       modalToolName.textContent = meta.label;
       modal.classList.add('open');
     });
   });
 
-  modalCancel.addEventListener('click', () => {
+  function closeModal() {
     modal.classList.remove('open');
     pendingUrl = null;
-  });
+    pendingConsumerUrl = null;
+  }
+
+  modalClose.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.remove('open');
-      pendingUrl = null;
-    }
+    if (e.target === modal) closeModal();
   });
 
-  modalGo.addEventListener('click', () => {
-    if (!pendingUrl) return;
+  function launchTool(targetUrl) {
+    if (!targetUrl) return;
     modal.classList.remove('open');
     const tool = pendingToolName === 'Blueprint' ? 'blueprint' : 'supplement';
     loaderTool.textContent = pendingToolName;
@@ -1499,17 +1531,18 @@
     setTimeout(() => loaderStatus.textContent = steps[1], 700);
     setTimeout(() => loaderStatus.textContent = steps[2], 1400);
     setTimeout(() => {
-      window.open(pendingUrl, '_blank', 'noopener');
+      window.open(targetUrl, '_blank', 'noopener');
       loader.classList.remove('open');
       pendingUrl = null;
+      pendingConsumerUrl = null;
     }, 1900);
-  });
+  }
+
+  modalGo.addEventListener('click', () => launchTool(pendingUrl));
+  modalConsumer.addEventListener('click', () => launchTool(pendingConsumerUrl));
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) {
-      modal.classList.remove('open');
-      pendingUrl = null;
-    }
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 </script>
 

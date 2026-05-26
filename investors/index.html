@@ -429,6 +429,27 @@
   .card-meta .privacy-mark { color: var(--teal-700); display: inline-flex; align-items: center; gap: 6px; }
   .card-meta .privacy-mark svg { width: 11px; height: 11px; }
 
+  .sample-btn {
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--teal-700);
+    background: transparent;
+    color: var(--teal-700);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+  }
+  .sample-btn:hover { background: var(--teal-700); color: #fff; }
+  .sample-btn svg { width: 14px; height: 14px; }
+
   /* ---------- Privacy section ---------- */
   .privacy-section {
     background: var(--ink);
@@ -1150,6 +1171,11 @@
         </div>
       </div>
 
+      <a class="sample-btn" href="https://blueprint.evely.health/pro/sample-report" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+        See Sample Report
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+      </a>
+
       <div class="card-meta">
         <span>blueprint.evely.health/pro</span>
         <span class="privacy-mark">
@@ -1198,6 +1224,11 @@
           </div>
         </div>
       </div>
+
+      <a class="sample-btn" href="#" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+        See Sample Report
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+      </a>
 
       <div class="card-meta">
         <span>supplementintelligence.evely.health</span>

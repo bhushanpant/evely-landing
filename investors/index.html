@@ -256,7 +256,7 @@
   .video-frame {
     background: var(--paper);
     border: 1px solid var(--line);
-    border-radius: 18px 56px 18px 18px;
+    border-radius: 18px 120px 18px 18px;
     overflow: hidden;
     position: relative;
     aspect-ratio: 16 / 9;
@@ -269,7 +269,21 @@
     height: 100%;
     border: 0;
   }
+  .drive-video::after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 48px;
+  height: 48px;
+  background: rgba(20, 20, 20, 0.92);
+  border-radius: 4px;
+  z-index: 5;
+  pointer-events: auto;
+  cursor: default;
+}
 
+  
   .tool-card {
     position: relative;
     background: var(--paper);
@@ -1090,10 +1104,10 @@
   </div>
 
   <div class="video-grid">
-    <div class="video-frame">
+    <div class="video-frame drive-video">
       <iframe src="https://drive.google.com/file/d/1TuKAJVBXJo39KYIgm51F46c2yGeaDleE/preview" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
     </div>
-    <div class="video-frame">
+    <div class="video-frame drive-video">
       <iframe src="https://drive.google.com/file/d/1_LAi3YRGQQRlk9YeIcpgQ1UhkDbjq5cM/preview" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
     </div>
   </div>
